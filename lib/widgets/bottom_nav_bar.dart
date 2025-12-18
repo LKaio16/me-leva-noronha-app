@@ -39,7 +39,7 @@ class AppBottomNavBar extends StatelessWidget {
                 onTap: () => onTap(0),
               ),
               _NavItem(
-                icon: Icons.flight_rounded,
+                icon: Icons.sailing_rounded,
                 label: 'Passeios',
                 isSelected: currentIndex == 1,
                 onTap: () => onTap(1),
