@@ -38,22 +38,19 @@ class Tour {
     final categoria = json['categoria']?.toString().toUpperCase() ?? '';
     
     // Mapeia categoria da API para TourCategory
+    // API usa: AQUATICOS, TERRESTRES, EXCLUSIVOS, AVENTURA
     TourCategory category;
     switch (categoria) {
       case 'AVENTURA':
         category = TourCategory.aventura;
         break;
-      case 'AQUATICO':
-      case 'MERGULHO':
-      case 'BARCO':
+      case 'AQUATICOS':
         category = TourCategory.aquaticos;
         break;
-      case 'TERRESTRE':
-      case 'TRILHA':
+      case 'TERRESTRES':
         category = TourCategory.terrestres;
         break;
-      case 'EXCLUSIVO':
-      case 'VIP':
+      case 'EXCLUSIVOS':
         category = TourCategory.exclusivos;
         break;
       default:
