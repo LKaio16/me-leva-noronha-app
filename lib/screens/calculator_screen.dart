@@ -1414,30 +1414,62 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     
     // Tenta diferentes chaves possíveis que a API pode retornar
     final result = _calculationResult!;
+    double transportValue = 0.0;
     
     // Tenta 'transporte' primeiro
     if (result.containsKey('transporte')) {
       final value = result['transporte'];
-      if (value is num) return value.toDouble();
-      if (value is String) return double.tryParse(value) ?? 0.0;
+      if (value is num) transportValue = value.toDouble();
+      else if (value is String) transportValue = double.tryParse(value) ?? 0.0;
     }
-    
     // Tenta 'custoTransporte'
-    if (result.containsKey('custoTransporte')) {
+    else if (result.containsKey('custoTransporte')) {
       final value = result['custoTransporte'];
-      if (value is num) return value.toDouble();
-      if (value is String) return double.tryParse(value) ?? 0.0;
+      if (value is num) transportValue = value.toDouble();
+      else if (value is String) transportValue = double.tryParse(value) ?? 0.0;
     }
-    
     // Tenta 'transporteLocal'
-    if (result.containsKey('transporteLocal')) {
+    else if (result.containsKey('transporteLocal')) {
       final value = result['transporteLocal'];
-      if (value is num) return value.toDouble();
-      if (value is String) return double.tryParse(value) ?? 0.0;
+      if (value is num) transportValue = value.toDouble();
+      else if (value is String) transportValue = double.tryParse(value) ?? 0.0;
     }
     
     // Se não encontrou, retorna 0.0
-    return 0.0;
+    if (transportValue == 0.0) return 0.0;
+    
+    // Ajusta a lógica: carro e táxi são custos fixos por veículo, não por pessoa
+    // A API provavelmente está multiplicando pelo número de pessoas
+    if (_transportType == 'car') {
+      // Aluguel de carro: até 5 pessoas = 1 carro (custo fixo)
+      // Se a API multiplicou por pessoa, precisamos dividir pelo número de pessoas
+      // Mas só se for até 5 pessoas (acima disso, precisa de mais de 1 carro)
+      if (_people <= 5) {
+        // Para até 5 pessoas, é 1 carro, então dividimos pelo número de pessoas
+        // para obter o custo real do carro
+        return transportValue / _people;
+      } else {
+        // Para mais de 5 pessoas, calcula quantos carros são necessários
+        final numberOfCars = (_people / 5).ceil();
+        return transportValue / _people * numberOfCars;
+      }
+    } else if (_transportType == 'taxi') {
+      // Táxi: até 4 pessoas = 1 táxi (custo fixo)
+      if (_people <= 4) {
+        // Para até 4 pessoas, é 1 táxi
+        return transportValue / _people;
+      } else {
+        // Para mais de 4 pessoas, calcula quantos táxis são necessários
+        final numberOfTaxis = (_people / 4).ceil();
+        return transportValue / _people * numberOfTaxis;
+      }
+    } else if (_transportType == 'bus') {
+      // Ônibus: mantém a lógica atual (multiplica por pessoa)
+      return transportValue;
+    }
+    
+    // Para 'none' ou outros casos, retorna o valor original
+    return transportValue;
   }
 
   List<Widget> _buildRestaurantOptions() {
