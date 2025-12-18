@@ -155,10 +155,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
     final hourlyWeather = _hourlyWeather.isNotEmpty ? _hourlyWeather : _mockDataService.getHourlyWeather(_selectedDate);
     final forecast = _forecast.isNotEmpty ? _forecast : _mockDataService.getDailyForecast();
 
-    return Column(
-      children: [
-        // Header with back button
-        if (widget.onBack != null)
+    return AnimatedOpacity(
+      opacity: _isLoading ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: Column(
+        children: [
+          // Header with back button
+          if (widget.onBack != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             decoration: BoxDecoration(
@@ -384,6 +388,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ),
         ),
       ],
+      ),
     );
   }
 

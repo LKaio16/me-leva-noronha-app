@@ -122,10 +122,14 @@ class _TransportScreenState extends State<TransportScreen> with SingleTickerProv
   Widget build(BuildContext context) {
     final busStops = _dataService.getBusStops();
 
-    return Column(
-      children: [
-        // Header with back button
-        if (widget.onBack != null)
+    return AnimatedOpacity(
+      opacity: _isLoadingOrigins ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: Column(
+        children: [
+          // Header with back button
+          if (widget.onBack != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             decoration: BoxDecoration(
@@ -670,6 +674,7 @@ class _TransportScreenState extends State<TransportScreen> with SingleTickerProv
           ),
         ),
       ],
+      ),
     );
   }
 }

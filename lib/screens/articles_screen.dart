@@ -219,21 +219,26 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
       );
     }
 
-    return RefreshIndicator(
-      onRefresh: _carregarDicas,
-      color: AppColors.primary,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: _articles.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: _ArticleCard(
-              article: _articles[index],
-              onTap: () => setState(() => _selectedArticle = _articles[index]),
-            ),
-          );
-        },
+    return AnimatedOpacity(
+      opacity: _isLoading ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: RefreshIndicator(
+        onRefresh: _carregarDicas,
+        color: AppColors.primary,
+        child: ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: _articles.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: _ArticleCard(
+                article: _articles[index],
+                onTap: () => setState(() => _selectedArticle = _articles[index]),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

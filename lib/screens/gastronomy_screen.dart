@@ -126,7 +126,11 @@ class _GastronomyScreenState extends State<GastronomyScreen> {
         ? _restaurants
         : _restaurants.where((r) => r.priceRange == _priceFilter).toList();
 
-    return SingleChildScrollView(
+    return AnimatedOpacity(
+      opacity: _isLoading ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -299,6 +303,7 @@ class _GastronomyScreenState extends State<GastronomyScreen> {
 
           const SizedBox(height: 80),
         ],
+      ),
       ),
     );
   }

@@ -125,7 +125,11 @@ class _ToursScreenState extends State<ToursScreen> {
         ? _tours
         : _tours.where((t) => t.categories.contains(_selectedCategory)).toList();
 
-    return Stack(
+    return AnimatedOpacity(
+      opacity: _isLoading ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: Stack(
       children: [
         RefreshIndicator(
           onRefresh: _loadTours,
@@ -382,6 +386,7 @@ class _ToursScreenState extends State<ToursScreen> {
             onClose: () => setState(() => _selectedTour = null),
           ),
       ],
+      ),
     );
   }
 

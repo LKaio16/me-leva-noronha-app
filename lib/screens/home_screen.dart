@@ -276,26 +276,31 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    return Column(
-      children: _dicas.map((dica) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: _ArticleCard(
-            imageUrl: dica.imageUrl,
-            title: dica.title,
-            subtitle: dica.content,
-            category: dica.category,
-            onTap: () {
-              // Se tem callback específico, usa ele, senão navega para lista
-              if (widget.onNavigateToArticle != null) {
-                widget.onNavigateToArticle!(dica);
-              } else {
-                widget.onNavigate('articles');
-              }
-            },
-          ),
-        );
-      }).toList(),
+    return AnimatedOpacity(
+      opacity: _isLoadingDicas ? 0.0 : 1.0,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeIn,
+      child: Column(
+        children: _dicas.map((dica) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _ArticleCard(
+              imageUrl: dica.imageUrl,
+              title: dica.title,
+              subtitle: dica.content,
+              category: dica.category,
+              onTap: () {
+                // Se tem callback específico, usa ele, senão navega para lista
+                if (widget.onNavigateToArticle != null) {
+                  widget.onNavigateToArticle!(dica);
+                } else {
+                  widget.onNavigate('articles');
+                }
+              },
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
