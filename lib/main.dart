@@ -431,16 +431,20 @@ class _MainNavigatorState extends State<MainNavigator> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/icons/logo-mini.png',
-              width: 24,
-              height: 24,
-              fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback para ícone se a imagem não carregar
-                return const Icon(Icons.flight, color: Colors.white, size: 18);
-              },
-            ),
+            // Se estiver na tela de passeios, mostra o ícone do barco
+            if (_currentPage == 'tours')
+              const Icon(Icons.sailing_rounded, color: Colors.white, size: 20)
+            else
+              Image.asset(
+                'assets/icons/logo-mini.png',
+                width: 24,
+                height: 24,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  // Fallback para ícone se a imagem não carregar
+                  return const Icon(Icons.flight, color: Colors.white, size: 18);
+                },
+              ),
             const SizedBox(width: 6),
             Text(
               _getAppBarTitle(),
