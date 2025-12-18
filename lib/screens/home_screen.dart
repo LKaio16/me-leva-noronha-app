@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
               childAspectRatio: 1.5,
               children: [
                 _QuickActionCard(
-                  icon: Icons.flight_rounded,
+                  icon: Icons.sailing_rounded,
                   label: 'Passeios',
                   onTap: () => widget.onNavigate('tours'),
                 ),
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () => widget.onNavigate('tide'),
                 ),
                 _QuickActionCard(
-                  icon: Icons.wb_sunny_rounded,
+                  icon: Icons.cloud_rounded,
                   label: 'Previsão',
                   onTap: () => widget.onNavigate('weather'),
                 ),
