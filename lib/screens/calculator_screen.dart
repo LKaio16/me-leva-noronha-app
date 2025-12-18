@@ -381,9 +381,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       else if (_restaurantCategory == 'luxury') categoriaRestaurante = 'PREMIUM';
 
       String tipoTransporte = 'NENHUM';
-      if (_transportType == 'car') tipoTransporte = 'ALUGUEL_CARRO_BUGGY';
-      else if (_transportType == 'taxi') tipoTransporte = 'TAXI';
-      else if (_transportType == 'bus') tipoTransporte = 'ONIBUS';
+      if (_transportType == 'car') {
+        tipoTransporte = 'ALUGUEL_CARRO_BUGGY';
+      } else if (_transportType == 'taxi') {
+        tipoTransporte = 'TAXI';
+      } else if (_transportType == 'bus') {
+        tipoTransporte = 'ONIBUS';
+      } else if (_transportType == 'none') {
+        tipoTransporte = 'NENHUM';
+      }
+      
+      debugPrint('Calculator: tipoTransporte selecionado: $_transportType -> $tipoTransporte');
 
       final response = await _apiService.calculateTravelCosts(
         origem: origem,
@@ -397,8 +405,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       );
 
       if (response.isSuccess && response.data != null) {
+        final result = response.data as Map<String, dynamic>;
+        debugPrint('Calculator: Resultado da API: $result');
+        debugPrint('Calculator: Transporte no resultado: ${result['transporte']}');
+        debugPrint('Calculator: Chaves disponíveis: ${result.keys.toList()}');
         setState(() {
-          _calculationResult = response.data as Map<String, dynamic>;
+          _calculationResult = result;
           _isCalculating = false;
         });
       } else {
@@ -1105,7 +1117,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         _buildCostRow(
                           Icons.directions_car,
                           'Transporte Local',
-                          (_calculationResult!['transporte'] as num?)?.toDouble() ?? 0.0,
+                          _getTransportCost(),
                         ),
                         _buildCostRow(
                           Icons.receipt,
@@ -1395,6 +1407,37 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         onTap: () => setState(() => _accommodation = opt['key']),
       ),
     )).toList();
+  }
+
+  double _getTransportCost() {
+    if (_calculationResult == null) return 0.0;
+    
+    // Tenta diferentes chaves possíveis que a API pode retornar
+    final result = _calculationResult!;
+    
+    // Tenta 'transporte' primeiro
+    if (result.containsKey('transporte')) {
+      final value = result['transporte'];
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+    }
+    
+    // Tenta 'custoTransporte'
+    if (result.containsKey('custoTransporte')) {
+      final value = result['custoTransporte'];
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+    }
+    
+    // Tenta 'transporteLocal'
+    if (result.containsKey('transporteLocal')) {
+      final value = result['transporteLocal'];
+      if (value is num) return value.toDouble();
+      if (value is String) return double.tryParse(value) ?? 0.0;
+    }
+    
+    // Se não encontrou, retorna 0.0
+    return 0.0;
   }
 
   List<Widget> _buildRestaurantOptions() {
