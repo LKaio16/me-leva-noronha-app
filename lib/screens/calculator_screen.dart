@@ -20,6 +20,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   List<Map<String, dynamic>> _airports = [];
   List<Map<String, dynamic>> _tours = [];
   Map<String, dynamic>? _selectedAirport;
+  List<Map<String, dynamic>> _airportSuggestions = [];
   bool _isLoadingAirports = false;
   bool _isLoadingTours = false;
   bool _isCalculating = false;
@@ -109,14 +110,52 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       setState(() {
         _selectedAirport = null;
         _cityName = null;
+        _airportSuggestions = [];
       });
       return;
     }
-
-    // Normaliza a cidade para busca (remove acentos, lowercase)
-    final normalizedCity = _normalizeString(cityName);
     
-    // Mapeamento de cidades comuns para códigos IATA principais
+    // Busca sugestões de aeroportos
+    final normalizedCity = _normalizeString(cityName);
+    final suggestions = <Map<String, dynamic>>[];
+    
+    for (var airport in _airports) {
+      final airportCity = _normalizeString(airport['cidade']?.toString() ?? '');
+      final airportName = _normalizeString(airport['nomeAeroporto']?.toString() ?? '');
+      final iata = _normalizeString(airport['codigoIATA']?.toString() ?? '');
+      
+      if (airportCity.contains(normalizedCity) || 
+          normalizedCity.contains(airportCity) ||
+          airportName.contains(normalizedCity) ||
+          iata.contains(normalizedCity)) {
+        suggestions.add(airport);
+      }
+    }
+    
+    // Limita a 5 sugestões
+    _airportSuggestions = suggestions.take(5).toList();
+    
+    setState(() {
+      _cityName = cityName;
+    });
+    
+    // Se houver apenas uma sugestão exata, seleciona automaticamente
+    if (_airportSuggestions.length == 1) {
+      final exactMatch = _airportSuggestions.first;
+      final airportCity = _normalizeString(exactMatch['cidade']?.toString() ?? '');
+      if (airportCity == normalizedCity) {
+        setState(() {
+          _selectedAirport = exactMatch;
+          _cityName = cityName;
+          _airportSuggestions = [];
+        });
+        return;
+      }
+    }
+    
+    // Se não encontrou sugestões, tenta a busca antiga como fallback
+    if (_airportSuggestions.isEmpty) {
+      // Mapeamento de cidades comuns para códigos IATA principais
     final cityToIataMap = {
       'sao paulo': 'GRU',
       'sp': 'GRU',
@@ -227,10 +266,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
     // Se não encontrou, permite continuar mesmo assim
     // Usará um código padrão baseado na primeira letra ou região
-    setState(() {
-      _selectedAirport = null;
-      _cityName = cityName;
-    });
+      setState(() {
+        _selectedAirport = null;
+        _cityName = cityName;
+      });
+    }
   }
 
   String _normalizeString(String str) {
@@ -431,9 +471,77 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                               : null,
                         ),
                         onChanged: (value) {
+                          setState(() {
+                            _cityName = value;
+                            _selectedAirport = null;
+                          });
                           _findNearestAirport(value);
                         },
                       ),
+                      // Lista de sugestões de aeroportos
+                      if (_airportSuggestions.isNotEmpty && _selectedAirport == null)
+                        Container(
+                          margin: const EdgeInsets.only(top: 8),
+                          constraints: const BoxConstraints(maxHeight: 200),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.gray200),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: _airportSuggestions.length,
+                            itemBuilder: (context, index) {
+                              final airport = _airportSuggestions[index];
+                              return InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedAirport = airport;
+                                    _cityName = airport['cidade']?.toString() ?? '';
+                                    _cityController.text = airport['cidade']?.toString() ?? '';
+                                    _airportSuggestions = [];
+                                  });
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.flight_takeoff, color: AppColors.primary, size: 20),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              airport['nomeAeroporto']?.toString() ?? '',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColors.gray800,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${airport['cidade']?.toString() ?? ''} - ${airport['codigoIATA']?.toString() ?? ''}',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                color: AppColors.gray600,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         transitionBuilder: (child, animation) {

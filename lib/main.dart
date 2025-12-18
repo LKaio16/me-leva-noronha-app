@@ -208,6 +208,7 @@ class _MainNavigatorState extends State<MainNavigator> {
 
   void _onBottomNavTap(int index) {
     setState(() {
+      _previousPage = _currentPage; // Salva a página atual antes de navegar
       _currentIndex = index;
       _currentPage = _bottomNavPages[index];
     });
@@ -280,17 +281,65 @@ class _MainNavigatorState extends State<MainNavigator> {
           initialArticle: _selectedArticleForNavigation,
         );
       case 'tide':
-        return TideScreen(onBack: () => _navigateTo('more'));
+        return TideScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       case 'weather':
-        return WeatherScreen(onBack: () => _navigateTo('more'));
+        return WeatherScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       case 'transport':
-        return TransportScreen(onBack: () => _navigateTo('more'));
+        return TransportScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       case 'services':
-        return ServicesScreen(onBack: () => _navigateTo('more'));
+        return ServicesScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       case 'nightlife':
-        return NightlifeScreen(onBack: () => _navigateTo('more'));
+        return NightlifeScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       case 'calculator':
-        return CalculatorScreen(onBack: () => _navigateTo('more'));
+        return CalculatorScreen(onBack: () {
+          setState(() {
+            _currentPage = _previousPage;
+            final index = _bottomNavPages.indexOf(_previousPage);
+            if (index != -1) {
+              _currentIndex = index;
+            }
+          });
+        });
       default:
         return HomeScreen(onNavigate: _navigateTo);
     }
@@ -315,7 +364,16 @@ class _MainNavigatorState extends State<MainNavigator> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.flight, color: Colors.white, size: 18),
+            Image.asset(
+              'assets/icons/logo-mini.png',
+              width: 24,
+              height: 24,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                // Fallback para ícone se a imagem não carregar
+                return const Icon(Icons.flight, color: Colors.white, size: 18);
+              },
+            ),
             const SizedBox(width: 6),
             Text(
               _getAppBarTitle(),

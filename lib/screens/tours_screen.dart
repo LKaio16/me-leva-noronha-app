@@ -225,62 +225,100 @@ class _ToursScreenState extends State<ToursScreen> {
                 const SizedBox(height: 16),
 
                 // All Tours
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        _selectedCategory == TourCategory.todos 
-                          ? 'Todos os Passeios' 
-                          : _selectedCategory.label,
-                        style: Theme.of(context).textTheme.titleLarge,
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.1),
+                          end: Offset.zero,
+                        ).animate(CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOut,
+                        )),
+                        child: child,
                       ),
-                      Text(
-                        '${filteredTours.length} passeios',
-                        style: TextStyle(
-                          color: AppColors.gray500,
-                          fontSize: 12,
+                    );
+                  },
+                  child: Padding(
+                    key: ValueKey(_selectedCategory),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _selectedCategory == TourCategory.todos 
+                            ? 'Todos os Passeios' 
+                            : _selectedCategory.label,
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
-                      ),
-                    ],
+                        Text(
+                          '${filteredTours.length} passeios',
+                          style: TextStyle(
+                            color: AppColors.gray500,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12),
 
-                if (filteredTours.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(32),
-                    child: Center(
-                      child: Column(
-                        children: [
-                          Icon(Icons.search_off, size: 48, color: AppColors.gray300),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Nenhum passeio encontrado\nnesta categoria',
-                            style: TextStyle(color: AppColors.gray500),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.1),
+                          end: Offset.zero,
+                        ).animate(CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOut,
+                        )),
+                        child: child,
                       ),
-                    ),
-                  )
-                else
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: filteredTours.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: _TourListCard(
-                          tour: filteredTours[index],
-                          onTap: () => _showTourDetails(filteredTours[index]),
+                    );
+                  },
+                  child: filteredTours.isEmpty
+                    ? Padding(
+                        key: const ValueKey('empty'),
+                        padding: const EdgeInsets.all(32),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Icon(Icons.search_off, size: 48, color: AppColors.gray300),
+                              const SizedBox(height: 16),
+                              Text(
+                                'Nenhum passeio encontrado\nnesta categoria',
+                                style: TextStyle(color: AppColors.gray500),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
+                      )
+                    : ListView.builder(
+                        key: ValueKey('list_${_selectedCategory}'),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: filteredTours.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: _TourListCard(
+                              tour: filteredTours[index],
+                              onTap: () => _showTourDetails(filteredTours[index]),
+                            ),
+                          );
+                        },
+                      ),
+                ),
 
                 // Tip Box
                 Padding(

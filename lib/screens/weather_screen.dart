@@ -63,13 +63,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
           final hourlyList = data['hourly'] as List<dynamic>;
           final now = DateTime.now();
           
-          // Filtra apenas horários futuros antes de criar os objetos
+          // Filtra apenas horários futuros e limita a 12 horas à frente
+          final twelveHoursLater = now.add(const Duration(hours: 12));
           final futureHourly = hourlyList.where((json) {
             try {
               final timeStr = json['time']?.toString() ?? '';
               if (timeStr.contains('T')) {
                 final dateTime = DateTime.parse(timeStr);
-                return dateTime.isAfter(now);
+                return dateTime.isAfter(now) && dateTime.isBefore(twelveHoursLater) || dateTime.isAtSameMomentAs(twelveHoursLater);
               }
               return true;
             } catch (e) {
@@ -270,19 +271,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                 icon: Icons.air,
                                 label: 'Vento',
                                 value: '${currentWeather.wind} km/h',
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _WeatherDetailCard(
-                                icon: Icons.wb_sunny,
-                                label: 'Índice UV',
-                                value: '${currentWeather.uvIndex}',
-                                highlight: true,
                               ),
                             ),
                           ],

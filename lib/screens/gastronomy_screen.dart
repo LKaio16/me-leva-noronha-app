@@ -188,17 +188,68 @@ class _GastronomyScreenState extends State<GastronomyScreen> {
           const SizedBox(height: 16),
 
           // Restaurant List
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: filteredRestaurants.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: _RestaurantCard(restaurant: filteredRestaurants[index]),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            transitionBuilder: (child, animation) {
+              return FadeTransition(
+                opacity: animation,
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, 0.1),
+                    end: Offset.zero,
+                  ).animate(CurvedAnimation(
+                    parent: animation,
+                    curve: Curves.easeOut,
+                  )),
+                  child: child,
+                ),
               );
             },
+            child: filteredRestaurants.isEmpty
+              ? Padding(
+                  key: const ValueKey('empty'),
+                  padding: const EdgeInsets.all(32),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.restaurant, size: 64, color: AppColors.gray400),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Nenhum restaurante disponível nesta categoria',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.gray600,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Tente selecionar outra categoria de preço',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.gray500,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  key: ValueKey('list_${_priceFilter}'),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: filteredRestaurants.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: _RestaurantCard(restaurant: filteredRestaurants[index]),
+                    );
+                  },
+                ),
           ),
 
           // Info Box
