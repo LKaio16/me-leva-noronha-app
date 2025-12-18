@@ -195,7 +195,13 @@ class _MainNavigatorState extends State<MainNavigator> {
     setState(() {
       // Se não está navegando para articles com artigo específico, salva a página atual
       if (page != 'articles' || _selectedArticleForNavigation == null) {
-        _previousPage = _currentPage;
+        // Só salva como página anterior se for uma página válida e diferente da atual
+        if (_currentPage.isNotEmpty && _currentPage != page && _bottomNavPages.contains(_currentPage)) {
+          _previousPage = _currentPage;
+        } else if (_previousPage.isEmpty || !_bottomNavPages.contains(_previousPage)) {
+          // Se não tem página anterior válida, define como home
+          _previousPage = 'home';
+        }
       }
       _currentPage = page;
       // Atualiza o index da bottom nav se for uma página principal
@@ -266,13 +272,20 @@ class _MainNavigatorState extends State<MainNavigator> {
             setState(() {
               _selectedArticleForNavigation = null;
               // Se a página anterior não é 'articles', volta para ela
-              if (_previousPage != 'articles') {
+              if (_previousPage != 'articles' && _previousPage.isNotEmpty && _bottomNavPages.contains(_previousPage)) {
                 _currentPage = _previousPage;
                 // Atualiza o index da bottom nav se necessário
                 final index = _bottomNavPages.indexOf(_previousPage);
                 if (index != -1) {
                   _currentIndex = index;
+                } else {
+                  _currentPage = 'home';
+                  _currentIndex = 0;
                 }
+              } else {
+                // Se não tem página anterior válida, volta para home
+                _currentPage = 'home';
+                _currentIndex = 0;
               }
               // Se estava na lista de artigos, apenas limpa o artigo selecionado
               // (o ArticlesScreen vai voltar para a lista automaticamente)
@@ -283,60 +296,114 @@ class _MainNavigatorState extends State<MainNavigator> {
       case 'tide':
         return TideScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'tide' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
       case 'weather':
         return WeatherScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'weather' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
       case 'transport':
         return TransportScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'transport' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
       case 'services':
         return ServicesScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'services' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
       case 'nightlife':
         return NightlifeScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'nightlife' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
       case 'calculator':
         return CalculatorScreen(onBack: () {
           setState(() {
-            _currentPage = _previousPage;
-            final index = _bottomNavPages.indexOf(_previousPage);
-            if (index != -1) {
-              _currentIndex = index;
+            // Se não tem página anterior válida ou é a mesma página, volta para home
+            if (_previousPage.isEmpty || _previousPage == 'calculator' || !_bottomNavPages.contains(_previousPage)) {
+              _currentPage = 'home';
+              _currentIndex = 0;
+            } else {
+              _currentPage = _previousPage;
+              final index = _bottomNavPages.indexOf(_previousPage);
+              if (index != -1) {
+                _currentIndex = index;
+              } else {
+                _currentPage = 'home';
+                _currentIndex = 0;
+              }
             }
           });
         });
