@@ -320,52 +320,54 @@ class _ToursScreenState extends State<ToursScreen> {
                       ),
                 ),
 
-                // Tip Box
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          AppColors.amber500.withOpacity(0.1),
-                          AppColors.orange.withOpacity(0.1),
+                // Tip Box - só mostra quando o filtro está em "Todos"
+                if (_selectedCategory == TourCategory.todos) ...[
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.amber500.withOpacity(0.1),
+                            AppColors.orange.withOpacity(0.1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: AppColors.amber500.withOpacity(0.3)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Text('💡', style: TextStyle(fontSize: 32)),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Dica Importante',
+                                  style: TextStyle(
+                                    color: AppColors.amber900,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Recomendamos agendar seus passeios com antecedência, especialmente na alta temporada. Alguns passeios como a Trilha do Atalaia têm vagas limitadas!',
+                                  style: TextStyle(
+                                    color: AppColors.amber800,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.amber500.withOpacity(0.3)),
-                    ),
-                    child: Row(
-                      children: [
-                        const Text('💡', style: TextStyle(fontSize: 32)),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Dica Importante',
-                                style: TextStyle(
-                                  color: AppColors.amber900,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Recomendamos agendar seus passeios com antecedência, especialmente na alta temporada. Alguns passeios como a Trilha do Atalaia têm vagas limitadas!',
-                                style: TextStyle(
-                                  color: AppColors.amber800,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
                     ),
                   ),
-                ),
+                ],
 
                 const SizedBox(height: 80),
               ],

@@ -252,48 +252,50 @@ class _GastronomyScreenState extends State<GastronomyScreen> {
                 ),
           ),
 
-          // Info Box
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                gradient: AppColors.primaryGradient,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
-                    blurRadius: 20,
-                    offset: const Offset(0, 8),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('🍽️', style: TextStyle(fontSize: 32)),
-                  const SizedBox(height: 12),
-                  const Text(
-                    'Gastronomia Local',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+          // Info Box - só mostra quando o filtro está em "Todos"
+          if (_priceFilter == 'all') ...[
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withOpacity(0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Fernando de Noronha oferece opções gastronômicas para todos os gostos, desde frutos do mar frescos até culinária regional nordestina. Reserve com antecedência nos restaurantes mais concorridos!',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
-                      fontSize: 14,
-                      height: 1.5,
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('🍽️', style: TextStyle(fontSize: 32)),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Gastronomia Local',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Text(
+                      'Fernando de Noronha oferece opções gastronômicas para todos os gostos, desde frutos do mar frescos até culinária regional nordestina. Reserve com antecedência nos restaurantes mais concorridos!',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: 14,
+                        height: 1.5,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
 
           const SizedBox(height: 80),
         ],
