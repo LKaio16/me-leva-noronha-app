@@ -574,6 +574,66 @@ class _HourlyCard extends StatelessWidget {
         return AppColors.primary;
     }
   }
+
+  String _getWeatherTip() {
+    if (_currentWeather == null) {
+      return 'Carregando informações do clima...';
+    }
+
+    final weather = _currentWeather!;
+    final condition = weather.condition.toLowerCase();
+    final seaCondition = weather.seaCondition.toLowerCase();
+    
+    // Chuva
+    if (condition.contains('chuva') || condition.contains('rain') || condition.contains('chuvoso')) {
+      return 'Dia chuvoso na ilha! Recomendamos atividades cobertas como visitar o Projeto Tamar, Forte dos Remédios ou fazer compras na Vila dos Remédios. Leve guarda-chuva e evite trilhas escorregadias.';
+    }
+    
+    // Sol muito forte (UV alto)
+    if (weather.uvIndex >= 8) {
+      if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
+        return 'Sol intenso e mar calmo! Perfeito para mergulho e snorkeling. Use protetor solar FPS 50+, chapéu e evite exposição entre 10h e 15h. Recomendamos Praia do Sancho ou Baía dos Porcos pela manhã.';
+      } else {
+        return 'Sol muito forte hoje! Ideal para praias, mas cuidado com o sol. Use protetor solar FPS 50+ e reaplique a cada 2h. Evite exposição direta entre 10h e 15h. Hidrate-se bastante!';
+      }
+    }
+    
+    // Sol moderado (UV médio)
+    if (weather.uvIndex >= 5) {
+      if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
+        return 'Ótimo dia para praias e mergulho! Mar calmo favorece atividades aquáticas. Use protetor solar FPS 30+ e aproveite a Baía do Sancho ou Praia do Leão. Horário ideal: manhã ou final da tarde.';
+      } else {
+        return 'Dia ensolarado perfeito para explorar a ilha! Recomendamos visitar as praias pela manhã ou final da tarde. Use protetor solar e aproveite as trilhas com vistas incríveis.';
+      }
+    }
+    
+    // Nublado mas sem chuva
+    if (condition.contains('nublado') || condition.contains('cloud') || weather.uvIndex < 3) {
+      if (seaCondition.contains('agitado') || seaCondition.contains('forte')) {
+        return 'Dia nublado com mar agitado. Ideal para trilhas como a do Atalaia ou Mirante dos Golfinhos. Evite atividades aquáticas e aproveite para conhecer os pontos históricos da ilha.';
+      } else {
+        return 'Dia nublado, perfeito para caminhadas e trilhas! A temperatura está agradável. Recomendamos a Trilha do Atalaia, Mirante dos Golfinhos ou visitar o Centro de Visitantes do ICMBio.';
+      }
+    }
+    
+    // Temperatura muito alta
+    if (weather.temp >= 32) {
+      return 'Dia muito quente! Priorize atividades aquáticas ou locais com sombra. Use protetor solar, chapéu e mantenha-se hidratado. Evite atividades físicas intensas no sol entre 11h e 16h.';
+    }
+    
+    // Vento forte
+    if (weather.wind >= 25) {
+      return 'Vento forte hoje! Ideal para esportes como kitesurf ou windsurf. Para praias, prefira as mais protegidas como Praia do Meio. Cuidado com objetos soltos na praia.';
+    }
+    
+    // Condição padrão - dia agradável
+    if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
+      return 'Dia perfeito para aproveitar Noronha! Mar calmo favorece mergulho e snorkeling. Recomendamos visitar a Baía do Sancho, Praia do Leão ou fazer um passeio de barco.';
+    }
+    
+    // Dica genérica
+    return 'Ótimo dia para explorar Fernando de Noronha! Aproveite as praias, trilhas e pontos turísticos. Não esqueça o protetor solar e mantenha-se hidratado.';
+  }
 }
 
 class _DailyRow extends StatelessWidget {
@@ -659,66 +719,6 @@ class _DailyRow extends StatelessWidget {
       case WeatherIcon.rain:
         return AppColors.primary;
     }
-  }
-
-  String _getWeatherTip() {
-    if (_currentWeather == null) {
-      return 'Carregando informações do clima...';
-    }
-
-    final weather = _currentWeather!;
-    final condition = weather.condition.toLowerCase();
-    final seaCondition = weather.seaCondition.toLowerCase();
-    
-    // Chuva
-    if (condition.contains('chuva') || condition.contains('rain') || condition.contains('chuvoso')) {
-      return 'Dia chuvoso na ilha! Recomendamos atividades cobertas como visitar o Projeto Tamar, Forte dos Remédios ou fazer compras na Vila dos Remédios. Leve guarda-chuva e evite trilhas escorregadias.';
-    }
-    
-    // Sol muito forte (UV alto)
-    if (weather.uvIndex >= 8) {
-      if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
-        return 'Sol intenso e mar calmo! Perfeito para mergulho e snorkeling. Use protetor solar FPS 50+, chapéu e evite exposição entre 10h e 15h. Recomendamos Praia do Sancho ou Baía dos Porcos pela manhã.';
-      } else {
-        return 'Sol muito forte hoje! Ideal para praias, mas cuidado com o sol. Use protetor solar FPS 50+ e reaplique a cada 2h. Evite exposição direta entre 10h e 15h. Hidrate-se bastante!';
-      }
-    }
-    
-    // Sol moderado (UV médio)
-    if (weather.uvIndex >= 5) {
-      if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
-        return 'Ótimo dia para praias e mergulho! Mar calmo favorece atividades aquáticas. Use protetor solar FPS 30+ e aproveite a Baía do Sancho ou Praia do Leão. Horário ideal: manhã ou final da tarde.';
-      } else {
-        return 'Dia ensolarado perfeito para explorar a ilha! Recomendamos visitar as praias pela manhã ou final da tarde. Use protetor solar e aproveite as trilhas com vistas incríveis.';
-      }
-    }
-    
-    // Nublado mas sem chuva
-    if (condition.contains('nublado') || condition.contains('cloud') || weather.uvIndex < 3) {
-      if (seaCondition.contains('agitado') || seaCondition.contains('forte')) {
-        return 'Dia nublado com mar agitado. Ideal para trilhas como a do Atalaia ou Mirante dos Golfinhos. Evite atividades aquáticas e aproveite para conhecer os pontos históricos da ilha.';
-      } else {
-        return 'Dia nublado, perfeito para caminhadas e trilhas! A temperatura está agradável. Recomendamos a Trilha do Atalaia, Mirante dos Golfinhos ou visitar o Centro de Visitantes do ICMBio.';
-      }
-    }
-    
-    // Temperatura muito alta
-    if (weather.temp >= 32) {
-      return 'Dia muito quente! Priorize atividades aquáticas ou locais com sombra. Use protetor solar, chapéu e mantenha-se hidratado. Evite atividades físicas intensas no sol entre 11h e 16h.';
-    }
-    
-    // Vento forte
-    if (weather.wind >= 25) {
-      return 'Vento forte hoje! Ideal para esportes como kitesurf ou windsurf. Para praias, prefira as mais protegidas como Praia do Meio. Cuidado com objetos soltos na praia.';
-    }
-    
-    // Condição padrão - dia agradável
-    if (seaCondition.contains('tranquilo') || seaCondition.contains('calmo')) {
-      return 'Dia perfeito para aproveitar Noronha! Mar calmo favorece mergulho e snorkeling. Recomendamos visitar a Baía do Sancho, Praia do Leão ou fazer um passeio de barco.';
-    }
-    
-    // Dica genérica
-    return 'Ótimo dia para explorar Fernando de Noronha! Aproveite as praias, trilhas e pontos turísticos. Não esqueça o protetor solar e mantenha-se hidratado.';
   }
 }
 
