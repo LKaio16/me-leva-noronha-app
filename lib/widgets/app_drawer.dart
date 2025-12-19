@@ -16,7 +16,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final menuItems = [
-      _MenuItem(id: 'home', label: 'Me Leva Noronha', icon: Icons.home_rounded),
+      _MenuItem(id: 'home', label: 'Início', icon: Icons.home_rounded),
       _MenuItem(id: 'articles', label: 'Dicas e Artigos', icon: Icons.menu_book_rounded),
       _MenuItem(id: 'tours', label: 'Passeios', icon: Icons.sailing_rounded),
       _MenuItem(id: 'map', label: 'Mapa da Ilha', icon: Icons.map_rounded),
