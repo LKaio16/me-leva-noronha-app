@@ -440,59 +440,6 @@ class _WeatherScreenState extends State<WeatherScreen> {
       }
     }
   }
-}
-
-class _WeatherDetailCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final bool highlight;
-
-  const _WeatherDetailCard({
-    required this.icon,
-    required this.label,
-    required this.value,
-    this.highlight = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: highlight ? Colors.orange.shade50 : AppColors.gray50,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: 18,
-                color: highlight ? Colors.orange : AppColors.primary,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                label,
-                style: const TextStyle(fontSize: 12, color: AppColors.gray600),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.gray800,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   String _getWeatherTip() {
     if (_currentWeather == null) {
@@ -552,6 +499,59 @@ class _WeatherDetailCard extends StatelessWidget {
     
     // Dica genérica
     return 'Ótimo dia para explorar Fernando de Noronha! Aproveite as praias, trilhas e pontos turísticos. Não esqueça o protetor solar e mantenha-se hidratado.';
+  }
+}
+
+class _WeatherDetailCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final String value;
+  final bool highlight;
+
+  const _WeatherDetailCard({
+    required this.icon,
+    required this.label,
+    required this.value,
+    this.highlight = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: highlight ? Colors.orange.shade50 : AppColors.gray50,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 18,
+                color: highlight ? Colors.orange : AppColors.primary,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: const TextStyle(fontSize: 12, color: AppColors.gray600),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.gray800,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
