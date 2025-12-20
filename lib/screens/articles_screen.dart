@@ -224,20 +224,20 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
       child: RefreshIndicator(
-        onRefresh: _carregarDicas,
-        color: AppColors.primary,
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: _articles.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: _ArticleCard(
-                article: _articles[index],
-                onTap: () => setState(() => _selectedArticle = _articles[index]),
-              ),
-            );
-          },
+      onRefresh: _carregarDicas,
+      color: AppColors.primary,
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: _articles.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _ArticleCard(
+              article: _articles[index],
+              onTap: () => setState(() => _selectedArticle = _articles[index]),
+            ),
+          );
+        },
         ),
       ),
     );
@@ -580,7 +580,7 @@ class _ArticleDetailViewState extends State<_ArticleDetailView> {
                           child: _isIconLoaded
                               ? CachedImage(
                                   imageUrl: widget.article.icon,
-                                  useAuth: true,
+                            useAuth: true,
                                 )
                               : Container(
                                   color: Colors.white.withOpacity(0.1),
@@ -590,7 +590,7 @@ class _ArticleDetailViewState extends State<_ArticleDetailView> {
                                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                                     ),
                                   ),
-                                ),
+                          ),
                         ),
                       )
                     else

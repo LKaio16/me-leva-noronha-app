@@ -281,14 +281,14 @@ class _HomeScreenState extends State<HomeScreen> {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
       child: Column(
-        children: _dicas.map((dica) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: _ArticleCard(
-              imageUrl: dica.imageUrl,
-              title: dica.title,
-              subtitle: dica.content,
-              category: dica.category,
+      children: _dicas.map((dica) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: _ArticleCard(
+            imageUrl: dica.imageUrl,
+            title: dica.title,
+            subtitle: dica.content,
+            category: dica.category,
               onTap: () {
                 // Se tem callback específico, usa ele, senão navega para lista
                 if (widget.onNavigateToArticle != null) {
@@ -297,9 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   widget.onNavigate('articles');
                 }
               },
-            ),
-          );
-        }).toList(),
+          ),
+        );
+      }).toList(),
       ),
     );
   }
@@ -368,14 +368,14 @@ class _QuickActionCard extends StatelessWidget {
               const SizedBox(height: 6),
               Flexible(
                 child: Text(
-                  label,
-                  style: const TextStyle(
-                    color: Colors.white,
+                label,
+                style: const TextStyle(
+                  color: Colors.white,
                     fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

@@ -248,24 +248,24 @@ class _ToursScreenState extends State<ToursScreen> {
                   },
                   child: Padding(
                     key: ValueKey(_selectedCategory),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          _selectedCategory == TourCategory.todos 
-                            ? 'Todos os Passeios' 
-                            : _selectedCategory.label,
-                          style: Theme.of(context).textTheme.titleLarge,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _selectedCategory == TourCategory.todos 
+                          ? 'Todos os Passeios' 
+                          : _selectedCategory.label,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Text(
+                        '${filteredTours.length} passeios',
+                        style: TextStyle(
+                          color: AppColors.gray500,
+                          fontSize: 12,
                         ),
-                        Text(
-                          '${filteredTours.length} passeios',
-                          style: TextStyle(
-                            color: AppColors.gray500,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
                     ),
                   ),
                 ),
@@ -291,86 +291,86 @@ class _ToursScreenState extends State<ToursScreen> {
                   child: filteredTours.isEmpty
                     ? Padding(
                         key: const ValueKey('empty'),
-                        padding: const EdgeInsets.all(32),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Icon(Icons.search_off, size: 48, color: AppColors.gray300),
-                              const SizedBox(height: 16),
-                              Text(
-                                'Nenhum passeio encontrado\nnesta categoria',
-                                style: TextStyle(color: AppColors.gray500),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : ListView.builder(
-                        key: ValueKey('list_${_selectedCategory}'),
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: filteredTours.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: _TourListCard(
-                              tour: filteredTours[index],
-                              onTap: () => _showTourDetails(filteredTours[index]),
-                            ),
-                          );
-                        },
-                      ),
-                ),
-
-                // Tip Box - só mostra quando o filtro está em "Todos"
-                if (_selectedCategory == TourCategory.todos) ...[
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.amber500.withOpacity(0.1),
-                            AppColors.orange.withOpacity(0.1),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: AppColors.amber500.withOpacity(0.3)),
-                      ),
-                      child: Row(
+                    padding: const EdgeInsets.all(32),
+                    child: Center(
+                      child: Column(
                         children: [
-                          const Text('💡', style: TextStyle(fontSize: 32)),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Dica Importante',
-                                  style: TextStyle(
-                                    color: AppColors.amber900,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Recomendamos agendar seus passeios com antecedência, especialmente na alta temporada. Alguns passeios como a Trilha do Atalaia têm vagas limitadas!',
-                                  style: TextStyle(
-                                    color: AppColors.amber800,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Icon(Icons.search_off, size: 48, color: AppColors.gray300),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Nenhum passeio encontrado\nnesta categoria',
+                            style: TextStyle(color: AppColors.gray500),
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
                     ),
+                  )
+                    : ListView.builder(
+                        key: ValueKey('list_${_selectedCategory}'),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: filteredTours.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: _TourListCard(
+                          tour: filteredTours[index],
+                          onTap: () => _showTourDetails(filteredTours[index]),
+                        ),
+                      );
+                    },
+                      ),
                   ),
+
+                // Tip Box - só mostra quando o filtro está em "Todos"
+                if (_selectedCategory == TourCategory.todos) ...[
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          AppColors.amber500.withOpacity(0.1),
+                          AppColors.orange.withOpacity(0.1),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppColors.amber500.withOpacity(0.3)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Text('💡', style: TextStyle(fontSize: 32)),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Dica Importante',
+                                style: TextStyle(
+                                  color: AppColors.amber900,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Recomendamos agendar seus passeios com antecedência, especialmente na alta temporada. Alguns passeios como a Trilha do Atalaia têm vagas limitadas!',
+                                style: TextStyle(
+                                  color: AppColors.amber800,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 ],
 
                 const SizedBox(height: 80),

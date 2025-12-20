@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../config/app_colors.dart';
 import '../services/api_service.dart';
 import '../core/utils.dart';
@@ -34,7 +35,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String? _restaurantCategory;
   String? _transportType;
   List<String> _selectedTours = [];
-  
+
   Map<String, dynamic>? _calculationResult;
   String? _errorMessage;
 
@@ -638,12 +639,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                   )
                                 : const SizedBox.shrink(key: ValueKey('empty')),
                       ),
-                      const SizedBox(height: 12),
-                      _buildCheckbox(
-                        value: _skipFlight,
-                        label: 'Já tenho passagem aérea',
-                        onChanged: (val) => setState(() => _skipFlight = val ?? false),
-                      ),
+                        const SizedBox(height: 12),
+                        _buildCheckbox(
+                          value: _skipFlight,
+                          label: 'Já tenho passagem aérea',
+                          onChanged: (val) => setState(() => _skipFlight = val ?? false),
+                        ),
                     ],
                   ),
                 ),
@@ -666,7 +667,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ? Column(
                           key: const ValueKey('form'),
                           children: [
-                            const SizedBox(height: 12),
+                  const SizedBox(height: 12),
                             TweenAnimationBuilder<double>(
                               tween: Tween(begin: 0.0, end: 1.0),
                               duration: const Duration(milliseconds: 400),
@@ -681,20 +682,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                 );
                               },
                               child: _buildCard(
-                                step: 2,
-                                title: 'Duração da viagem',
-                                isComplete: true,
-                                suffix: '$_days dias',
-                                child: Column(
-                                  children: [
-                                    Slider(
-                                      value: _days.toDouble(),
-                                      min: 3,
-                                      max: 15,
-                                      divisions: 12,
-                                      label: '$_days dias',
-                                      onChanged: (val) => setState(() => _days = val.round()),
-                                    ),
+                    step: 2,
+                    title: 'Duração da viagem',
+                    isComplete: true,
+                    suffix: '$_days dias',
+                    child: Column(
+                      children: [
+                        Slider(
+                          value: _days.toDouble(),
+                          min: 3,
+                          max: 15,
+                          divisions: 12,
+                          label: '$_days dias',
+                          onChanged: (val) => setState(() => _days = val.round()),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
@@ -704,10 +705,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         ),
                       ],
                     ),
+                    ),
                   ),
-                            ),
 
-                            const SizedBox(height: 12),
+                  const SizedBox(height: 12),
                             TweenAnimationBuilder<double>(
                               tween: Tween(begin: 0.0, end: 1.0),
                               duration: const Duration(milliseconds: 500),
@@ -722,37 +723,37 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                 );
                               },
                               child: _buildCard(
-                                step: 3,
-                                title: 'Número de pessoas',
-                                isComplete: true,
-                                suffix: '$_people pessoas',
-                                child: Column(
-                                  children: [
-                                    Slider(
-                                      value: _people.toDouble(),
-                                      min: 1,
-                                      max: 6,
-                                      divisions: 5,
-                                      label: '$_people',
-                                      onChanged: (val) => setState(() => _people = val.round()),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text('1 pessoa', style: TextStyle(fontSize: 12, color: AppColors.gray500)),
-                                        Text('6 pessoas', style: TextStyle(fontSize: 12, color: AppColors.gray500)),
-                                      ],
-                                    ),
-                                  ],
+                    step: 3,
+                    title: 'Número de pessoas',
+                    isComplete: true,
+                    suffix: '$_people pessoas',
+                    child: Column(
+                      children: [
+                        Slider(
+                          value: _people.toDouble(),
+                          min: 1,
+                          max: 6,
+                          divisions: 5,
+                          label: '$_people',
+                          onChanged: (val) => setState(() => _people = val.round()),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            Text('1 pessoa', style: TextStyle(fontSize: 12, color: AppColors.gray500)),
+                            Text('6 pessoas', style: TextStyle(fontSize: 12, color: AppColors.gray500)),
+                          ],
+                        ),
+                      ],
                                 ),
-                              ),
-                            ),
+                    ),
+                  ),
 
-                            const SizedBox(height: 12),
-                            _buildCard(
-                              step: 4,
-                              title: 'Tipo de hospedagem',
-                              isComplete: _accommodation != null || _skipAccommodation,
+                  const SizedBox(height: 12),
+                  _buildCard(
+                    step: 4,
+                    title: 'Tipo de hospedagem',
+                    isComplete: _accommodation != null || _skipAccommodation,
                     child: Column(
                       children: [
                         if (!_skipAccommodation) ...[
@@ -802,13 +803,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                       key: const ValueKey('restaurant'),
                                       padding: const EdgeInsets.only(top: 12),
                                       child: _buildCard(
-                                        step: 5,
-                                        title: 'Categoria de Restaurantes',
-                                        isComplete: _restaurantCategory != null,
-                                        child: Column(
-                                          children: _buildRestaurantOptions(),
-                                        ),
-                                      ),
+                      step: 5,
+                      title: 'Categoria de Restaurantes',
+                      isComplete: _restaurantCategory != null,
+                      child: Column(
+                        children: _buildRestaurantOptions(),
+                      ),
+                    ),
                                     )
                                   : const SizedBox.shrink(key: ValueKey('no-restaurant')),
                             ),
@@ -832,13 +833,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                       key: const ValueKey('transport'),
                                       padding: const EdgeInsets.only(top: 12),
                                       child: _buildCard(
-                                        step: 6,
-                                        title: 'Transporte na Ilha',
-                                        isComplete: _transportType != null,
-                                        child: Column(
-                                          children: _buildTransportOptions(),
-                                        ),
-                                      ),
+                      step: 6,
+                      title: 'Transporte na Ilha',
+                      isComplete: _transportType != null,
+                      child: Column(
+                        children: _buildTransportOptions(),
+                      ),
+                    ),
                                     )
                                   : const SizedBox.shrink(key: ValueKey('no-transport')),
                             ),
@@ -862,10 +863,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                       key: const ValueKey('tours'),
                                       padding: const EdgeInsets.only(top: 12),
                                       child: _buildCard(
-                                        step: 7,
-                                        title: 'Selecione os Passeios',
-                                        subtitle: 'Escolha os passeios que deseja fazer (opcional)',
-                                        isComplete: true,
+                      step: 7,
+                      title: 'Selecione os Passeios',
+                      subtitle: 'Escolha os passeios que deseja fazer (opcional)',
+                      isComplete: true,
                                         child: _isLoadingTours
                                             ? const Center(child: CircularProgressIndicator())
                                             : Column(
@@ -880,8 +881,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                                         ),
                                                       ]
                                                     : _tours.asMap().entries.map((entry) {
-                                                        final index = entry.key;
-                                                        final tour = entry.value;
+                            final index = entry.key;
+                            final tour = entry.value;
                                                         final tourCode = tour['codigo']?.toString() ?? '';
                                                         final isSelected = _selectedTours.contains(tourCode);
                                                         final tourName = tour['nome']?.toString() ?? tour['descricao']?.toString() ?? '';
@@ -901,86 +902,86 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                                             );
                                                           },
                                                           child: Padding(
-                                                            padding: const EdgeInsets.only(bottom: 8),
+                              padding: const EdgeInsets.only(bottom: 8),
                                                             child: AnimatedContainer(
                                                               duration: const Duration(milliseconds: 200),
                                                               curve: Curves.easeInOut,
-                                                              child: Material(
-                                                                color: isSelected ? AppColors.secondaryBg : Colors.white,
-                                                                borderRadius: BorderRadius.circular(12),
-                                                                child: InkWell(
-                                                                  onTap: () => setState(() {
-                                                                    if (isSelected) {
+                              child: Material(
+                                color: isSelected ? AppColors.secondaryBg : Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                child: InkWell(
+                                  onTap: () => setState(() {
+                                    if (isSelected) {
                                                                       _selectedTours.remove(tourCode);
-                                                                    } else {
+                                    } else {
                                                                       _selectedTours.add(tourCode);
-                                                                    }
-                                                                  }),
-                                                                  borderRadius: BorderRadius.circular(12),
-                                                                  child: Container(
-                                                                    padding: const EdgeInsets.all(12),
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(12),
-                                                                      border: Border.all(
-                                                                        color: isSelected ? AppColors.primary : AppColors.gray200,
-                                                                        width: isSelected ? 2 : 1,
-                                                                      ),
-                                                                    ),
-                                                                    child: Row(
-                                                                      children: [
+                                    }
+                                  }),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: isSelected ? AppColors.primary : AppColors.gray200,
+                                        width: isSelected ? 2 : 1,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
                                                                         AnimatedScale(
                                                                           scale: isSelected ? 1.1 : 1.0,
                                                                           duration: const Duration(milliseconds: 200),
                                                                           child: Checkbox(
-                                                                            value: isSelected,
-                                                                            onChanged: (_) => setState(() {
-                                                                              if (isSelected) {
+                                          value: isSelected,
+                                          onChanged: (_) => setState(() {
+                                            if (isSelected) {
                                                                                 _selectedTours.remove(tourCode);
-                                                                              } else {
+                                            } else {
                                                                                 _selectedTours.add(tourCode);
-                                                                              }
-                                                                            }),
+                                            }
+                                          }),
                                                                           ),
-                                                                        ),
-                                                                        Expanded(
-                                                                          child: Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Text(
-                                                                                tourName,
-                                                                                style: const TextStyle(fontWeight: FontWeight.w600),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                        ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                tourName,
+                                                style: const TextStyle(fontWeight: FontWeight.w600),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                                                         if (tourPrice > 0)
-                                                                          Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                                                            children: [
-                                                                              Text(
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
                                                                                 AppUtils.formatMoney(tourPrice),
-                                                                                style: const TextStyle(
-                                                                                  color: AppColors.primary,
-                                                                                  fontWeight: FontWeight.bold,
-                                                                                ),
-                                                                              ),
-                                                                              const Text(
-                                                                                'por pessoa',
-                                                                                style: TextStyle(fontSize: 10, color: AppColors.gray500),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                      ],
+                                              style: const TextStyle(
+                                                color: AppColors.primary,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const Text(
+                                              'por pessoa',
+                                              style: TextStyle(fontSize: 10, color: AppColors.gray500),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
                                                       }).toList(),
                                                 ),
-                                            ),
+                      ),
                                       )
                                     : const SizedBox.shrink(key: ValueKey('no-tours')),
                               ),
@@ -1042,7 +1043,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                                       )
                                     : const SizedBox.shrink(key: ValueKey('no-button')),
                               ),
-                          ],
+                ],
                         )
                         : const SizedBox.shrink(key: ValueKey('empty-form')),
                       ),
@@ -1071,8 +1072,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ? Column(
                           key: const ValueKey('results'),
                           children: [
-                            const SizedBox(height: 16),
-                            Container(
+                  const SizedBox(height: 16),
+                  Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -1143,6 +1144,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ],
                     ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Custo Total Estimado',
@@ -1150,28 +1153,56 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             color: Colors.white.withOpacity(0.8),
                             fontSize: 14,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 8),
-                        Text(
-                          AppUtils.formatMoney((_calculationResult!['total'] as num?)?.toDouble() ?? 0.0),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
+                        Center(
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'R\$ ',
+                                  style: GoogleFonts.raleway(
+                                    color: Colors.white,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.0,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: AppUtils.formatNumberOnly((_calculationResult!['total'] as num?)?.toDouble() ?? 0.0),
+                                  style: GoogleFonts.robotoMono(
+                                    color: Colors.white,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.0,
+                                    letterSpacing: -1.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.center,
+                            textDirection: TextDirection.ltr,
                           ),
                         ),
                         const SizedBox(height: 12),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            '${AppUtils.formatMoney(((_calculationResult!['total'] as num?)?.toDouble() ?? 0.0) / _people)} por pessoa',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
+                        Center(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              '${AppUtils.formatMoney(((_calculationResult!['total'] as num?)?.toDouble() ?? 0.0) / _people)} por pessoa',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                height: 1.2,
+                                letterSpacing: 0,
+                              ),
+                              textAlign: TextAlign.center,
+                              textDirection: TextDirection.ltr,
                             ),
                           ),
                         ),
@@ -1220,7 +1251,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       ],
                     ),
                   ),
-                          ],
+                ],
                         )
                       : const SizedBox.shrink(key: ValueKey('no-results')),
                 ),
@@ -1308,11 +1339,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
                 child: Center(
                   child: isComplete
-                      ? const Icon(Icons.check, color: Colors.white, size: 18)
-                      : Text(
-                          '$step',
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                    ? const Icon(Icons.check, color: Colors.white, size: 18)
+                    : Text(
+                        '$step',
+                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -1545,17 +1576,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                 ),
               ),
               child: isSelected
-                  ? Center(
-                      child: Container(
-                        width: 8,
-                        height: 8,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                        ),
+                ? Center(
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
                       ),
-                    )
-                  : null,
+                    ),
+                  )
+                : null,
             ),
             const SizedBox(width: 12),
             if (icon != null) ...[

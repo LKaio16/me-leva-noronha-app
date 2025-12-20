@@ -137,9 +137,9 @@ class _AppInitializerState extends State<AppInitializer> {
                       errorBuilder: (context, error, stackTrace) {
                         // Fallback para ícone se a imagem não carregar
                         return const Icon(
-                          Icons.flight_rounded,
-                          size: 48,
-                          color: AppColors.primary,
+                      Icons.flight_rounded,
+                      size: 48,
+                      color: AppColors.primary,
                         );
                       },
                     ),

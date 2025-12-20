@@ -1,9 +1,24 @@
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 /// Tema do app Me Leva Noronha
 class AppTheme {
+  // Multiplicador de fonte para iOS (aumenta ligeiramente as fontes)
+  static double get _fontScale {
+    if (kIsWeb) return 1.0;
+    try {
+      return Platform.isIOS ? 1.12 : 1.0;
+    } catch (e) {
+      return 1.0;
+    }
+  }
+  
+  // Helper para ajustar tamanho de fonte baseado na plataforma
+  static double _fontSize(double size) => size * _fontScale;
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -22,77 +37,77 @@ class AppTheme {
       
       textTheme: GoogleFonts.ralewayTextTheme().copyWith(
         displayLarge: GoogleFonts.raleway(
-          fontSize: 32,
+          fontSize: _fontSize(32),
           fontWeight: FontWeight.bold,
           color: AppColors.gray800,
         ),
         displayMedium: GoogleFonts.raleway(
-          fontSize: 28,
+          fontSize: _fontSize(28),
           fontWeight: FontWeight.bold,
           color: AppColors.gray800,
         ),
         displaySmall: GoogleFonts.raleway(
-          fontSize: 24,
+          fontSize: _fontSize(24),
           fontWeight: FontWeight.bold,
           color: AppColors.gray800,
         ),
         headlineLarge: GoogleFonts.raleway(
-          fontSize: 22,
+          fontSize: _fontSize(22),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         headlineMedium: GoogleFonts.raleway(
-          fontSize: 20,
+          fontSize: _fontSize(20),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         headlineSmall: GoogleFonts.raleway(
-          fontSize: 18,
+          fontSize: _fontSize(18),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         titleLarge: GoogleFonts.raleway(
-          fontSize: 16,
+          fontSize: _fontSize(16),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         titleMedium: GoogleFonts.raleway(
-          fontSize: 14,
+          fontSize: _fontSize(14),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         titleSmall: GoogleFonts.raleway(
-          fontSize: 12,
+          fontSize: _fontSize(12),
           fontWeight: FontWeight.w600,
           color: AppColors.gray800,
         ),
         bodyLarge: GoogleFonts.raleway(
-          fontSize: 16,
+          fontSize: _fontSize(16),
           fontWeight: FontWeight.normal,
           color: AppColors.gray700,
         ),
         bodyMedium: GoogleFonts.raleway(
-          fontSize: 14,
+          fontSize: _fontSize(14),
           fontWeight: FontWeight.normal,
           color: AppColors.gray600,
         ),
         bodySmall: GoogleFonts.raleway(
-          fontSize: 12,
+          fontSize: _fontSize(12),
           fontWeight: FontWeight.normal,
           color: AppColors.gray500,
         ),
         labelLarge: GoogleFonts.raleway(
-          fontSize: 14,
+          fontSize: _fontSize(14),
           fontWeight: FontWeight.w500,
           color: AppColors.gray700,
         ),
         labelMedium: GoogleFonts.raleway(
-          fontSize: 12,
+          fontSize: _fontSize(12),
           fontWeight: FontWeight.w500,
           color: AppColors.gray600,
         ),
         labelSmall: GoogleFonts.raleway(
-          fontSize: 10,
+          fontSize: _fontSize(10),
           fontWeight: FontWeight.w500,
           color: AppColors.gray500,
         ),
@@ -104,7 +119,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: GoogleFonts.raleway(
-          fontSize: 18,
+          fontSize: _fontSize(18),
           fontWeight: FontWeight.w600,
           color: AppColors.white,
         ),
@@ -136,7 +151,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           textStyle: GoogleFonts.raleway(
-            fontSize: 14,
+            fontSize: _fontSize(14),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -151,7 +166,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           textStyle: GoogleFonts.raleway(
-            fontSize: 14,
+            fontSize: _fontSize(14),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -179,7 +194,7 @@ class AppTheme {
         backgroundColor: AppColors.white,
         selectedColor: AppColors.primary,
         labelStyle: GoogleFonts.raleway(
-          fontSize: 14,
+          fontSize: _fontSize(14),
           fontWeight: FontWeight.w500,
         ),
         shape: RoundedRectangleBorder(

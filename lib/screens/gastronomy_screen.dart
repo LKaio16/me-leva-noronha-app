@@ -243,62 +243,62 @@ class _GastronomyScreenState extends State<GastronomyScreen> {
                 )
               : ListView.builder(
                   key: ValueKey('list_${_priceFilter}'),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: filteredRestaurants.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: _RestaurantCard(restaurant: filteredRestaurants[index]),
-                    );
-                  },
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: filteredRestaurants.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _RestaurantCard(restaurant: filteredRestaurants[index]),
+              );
+            },
                 ),
           ),
 
           // Info Box - só mostra quando o filtro está em "Todos"
           if (_priceFilter == 'all') ...[
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  gradient: AppColors.primaryGradient,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.3),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withOpacity(0.3),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('🍽️', style: TextStyle(fontSize: 32)),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'Gastronomia Local',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('🍽️', style: TextStyle(fontSize: 32)),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Gastronomia Local',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Fernando de Noronha oferece opções gastronômicas para todos os gostos, desde frutos do mar frescos até culinária regional nordestina. Reserve com antecedência nos restaurantes mais concorridos!',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.9),
+                      fontSize: 14,
+                      height: 1.5,
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Fernando de Noronha oferece opções gastronômicas para todos os gostos, desde frutos do mar frescos até culinária regional nordestina. Reserve com antecedência nos restaurantes mais concorridos!',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.9),
-                        fontSize: 14,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+          ),
           ],
 
           const SizedBox(height: 80),
@@ -442,8 +442,8 @@ class _RestaurantCard extends StatelessWidget {
 
                 // Menu Button
                 if (restaurant.linkCardapio != null && restaurant.linkCardapio!.isNotEmpty)
-                  OutlinedButton.icon(
-                    onPressed: () {
+                OutlinedButton.icon(
+                  onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => PdfViewer(
@@ -451,19 +451,19 @@ class _RestaurantCard extends StatelessWidget {
                             title: 'Cardápio - ${restaurant.name}',
                           ),
                         ),
-                      );
-                    },
-                    icon: const Icon(Icons.menu_book, size: 18),
-                    label: const Text('Ver Cardápio'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primary,
-                      minimumSize: const Size(double.infinity, 44),
-                      side: const BorderSide(color: AppColors.primary, width: 2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.menu_book, size: 18),
+                  label: const Text('Ver Cardápio'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    minimumSize: const Size(double.infinity, 44),
+                    side: const BorderSide(color: AppColors.primary, width: 2),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
+                ),
                 const SizedBox(height: 8),
 
                 // Action Button

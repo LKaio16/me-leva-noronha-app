@@ -160,9 +160,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
       child: Column(
-        children: [
-          // Header with back button
-          if (widget.onBack != null)
+      children: [
+        // Header with back button
+        if (widget.onBack != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             decoration: BoxDecoration(
@@ -673,13 +673,13 @@ class _DailyRow extends StatelessWidget {
                     children: [
                       const Icon(Icons.water_drop, size: 14, color: AppColors.primary),
                       const SizedBox(width: 4),
-                      Text(
+                Text(
                         '${forecast.humidity}%',
-                        style: const TextStyle(
+                  style: const TextStyle(
                           color: AppColors.gray600,
-                          fontSize: 12,
-                        ),
-                      ),
+                    fontSize: 12,
+                  ),
+                ),
                     ],
                   ),
                 ],

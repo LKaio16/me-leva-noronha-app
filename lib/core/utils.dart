@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:intl/intl.dart';
 import '../config/app_constants.dart';
 
 /// Utilitários gerais do app
 class AppUtils {
-  /// Formata valor monetário
+  /// Formata apenas o número (sem R$) com ponto no milhar e vírgula nos decimais
+  static String formatNumberOnly(double value) {
+    final parts = value.toStringAsFixed(2).split('.');
+    final integerPart = parts[0];
+    final decimalPart = parts[1];
+    
+    // Adiciona pontos como separador de milhar
+    String formattedInteger = '';
+    for (int i = integerPart.length - 1, count = 0; i >= 0; i--, count++) {
+      if (count > 0 && count % 3 == 0) {
+        formattedInteger = '.$formattedInteger';
+      }
+      formattedInteger = integerPart[i] + formattedInteger;
+    }
+    
+    return '$formattedInteger,$decimalPart';
+  }
+
+  /// Formata valor monetário com ponto no milhar e vírgula nos decimais
   static String formatMoney(double value) {
-    return 'R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}';
+    return 'R\$ ${formatNumberOnly(value)}';
   }
 
   /// Abre link no navegador

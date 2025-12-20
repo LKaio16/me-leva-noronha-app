@@ -117,8 +117,8 @@ class _NightlifeScreenState extends State<NightlifeScreen> {
       duration: const Duration(milliseconds: 400),
       curve: Curves.easeIn,
       child: Column(
-        children: [
-          // Header with back button
+      children: [
+        // Header with back button
           if (widget.onBack != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -174,14 +174,14 @@ class _NightlifeScreenState extends State<NightlifeScreen> {
                               children: [
                                 ClipRRect(
                                   borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-                                    child: SizedBox(
-                                      height: 200,
-                                      width: double.infinity,
+                                  child: SizedBox(
+                                    height: 200,
+                                    width: double.infinity,
                                       child: CachedImage(
                                         imageUrl: venue.imageUrl,
                                         useAuth: true, // Imagens da API precisam de auth
                                       ),
-                                    ),
+                                  ),
                                 ),
                                 Positioned(
                                   bottom: 0,
@@ -261,18 +261,18 @@ class _NightlifeScreenState extends State<NightlifeScreen> {
                                       Expanded(
                                         child: SizedBox(
                                           height: 48,
-                                          child: ElevatedButton.icon(
-                                            onPressed: () => AppUtils.openWhatsApp(
-                                              number: venue.whatsapp,
-                                              message: 'Olá! Gostaria de mais informações sobre ${venue.name}',
-                                            ),
-                                            icon: const Icon(Icons.chat, size: 18),
-                                            label: const Text('Chamar no WhatsApp'),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: AppColors.whatsappGreen,
+                                        child: ElevatedButton.icon(
+                                          onPressed: () => AppUtils.openWhatsApp(
+                                            number: venue.whatsapp,
+                                            message: 'Olá! Gostaria de mais informações sobre ${venue.name}',
+                                          ),
+                                          icon: const Icon(Icons.chat, size: 18),
+                                          label: const Text('Chamar no WhatsApp'),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: AppColors.whatsappGreen,
                                               padding: EdgeInsets.zero,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
                                               ),
                                             ),
                                           ),
@@ -283,9 +283,9 @@ class _NightlifeScreenState extends State<NightlifeScreen> {
                                         height: 48,
                                         width: 48,
                                         child: Material(
-                                          color: AppColors.secondaryBg,
-                                          borderRadius: BorderRadius.circular(12),
-                                          child: InkWell(
+                                        color: AppColors.secondaryBg,
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: InkWell(
                                             onTap: () {
                                               if (venue.linkGoogleMaps != null && venue.linkGoogleMaps!.isNotEmpty) {
                                                 AppUtils.openUrl(venue.linkGoogleMaps!);
@@ -293,7 +293,7 @@ class _NightlifeScreenState extends State<NightlifeScreen> {
                                                 AppUtils.openGoogleMaps();
                                               }
                                             },
-                                            borderRadius: BorderRadius.circular(12),
+                                          borderRadius: BorderRadius.circular(12),
                                             child: const Icon(Icons.location_on, color: AppColors.primary),
                                           ),
                                         ),
